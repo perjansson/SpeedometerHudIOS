@@ -40,21 +40,17 @@ class ViewController: UIViewController {
         
         UIApplication.sharedApplication().idleTimerDisabled = true
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
-        
-        /*var alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-            switch action.style {
-            case .Default:
-                println("default")
-                
-            case .Cancel:
-                println("cancel")
-                
-            case .Destructive:
-                println("destructive")
-            }
-        }))
-        self.presentViewController(alert, animated: true, completion: nil)*/
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let alertController = UIAlertController(title: "Mph or km/h?", message: "Select how speed should be shown.", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "mph", style: .Default) { action in
+            self.isMph = true
+            })
+        alertController.addAction(UIAlertAction(title: "kmh", style: .Default) { action in
+            self.isMph = false
+            })
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func swipeUpOrDown() {
