@@ -125,16 +125,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func mirrorScreen() {
         isMirrored = true
         UIView.beginAnimations(nil, context: nil)
-        speed.layer.transform = CATransform3DMakeRotation(CGFloat(π), -360.0, 1.0, 0.0)
-        unit.layer.transform = CATransform3DMakeRotation(CGFloat(π), -360.0, 1.0, 0.0)
+        self.view.layer.transform = CATransform3DMakeRotation(CGFloat(π), -360.0, 1.0, 0.0)
         UIView.commitAnimations()
     }
     
     func unmirrorScreen() {
         isMirrored = false
         UIView.beginAnimations(nil, context: nil)
-        speed.layer.transform = CATransform3DMakeRotation(CGFloat(π), 0.0, 0.0, 0.0)
-        unit.layer.transform = CATransform3DMakeRotation(CGFloat(π), 0.0, 0.0, 0.0)
+        self.view.layer.transform = CATransform3DMakeRotation(CGFloat(π), 0.0, 0.0, 0.0)
         UIView.commitAnimations()
         
     }
