@@ -13,6 +13,7 @@
 		2EA87D3D1A34D0DC0000E46A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EA87D3C1A34D0DC0000E46A /* Images.xcassets */; };
 		2EA87D401A34D0DC0000E46A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EA87D3E1A34D0DC0000E46A /* LaunchScreen.xib */; };
 		2EA87D4C1A34D0DC0000E46A /* SpeedometerHudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA87D4B1A34D0DC0000E46A /* SpeedometerHudTests.swift */; };
+		2EA87D561A34EF5F0000E46A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA87D551A34EF5F0000E46A /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		2EA87D451A34D0DC0000E46A /* SpeedometerHudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedometerHudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA87D4A1A34D0DC0000E46A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EA87D4B1A34D0DC0000E46A /* SpeedometerHudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedometerHudTests.swift; sourceTree = "<group>"; };
+		2EA87D551A34EF5F0000E46A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA87D561A34EF5F0000E46A /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +62,7 @@
 		2EA87D271A34D0DC0000E46A = {
 			isa = PBXGroup;
 			children = (
+				2EA87D551A34EF5F0000E46A /* QuartzCore.framework */,
 				2EA87D321A34D0DC0000E46A /* SpeedometerHud */,
 				2EA87D481A34D0DC0000E46A /* SpeedometerHudTests */,
 				2EA87D311A34D0DC0000E46A /* Products */,
