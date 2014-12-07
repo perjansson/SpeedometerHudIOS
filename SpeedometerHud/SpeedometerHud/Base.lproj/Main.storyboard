@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DVn-QY-acS">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DVn-QY-acS">
                                 <rect key="frame" x="26" y="150" width="548" height="300"/>
                                 <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="300"/>
                                 <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -26,9 +26,10 @@
                                     <fontDescription key="fontDescription" name="STHeitiTC-Medium" family="Heiti TC" pointSize="250"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mph" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuN-XB-hYw">
-                                <rect key="frame" x="268" y="406" width="65" height="29"/>
-                                <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuN-XB-hYw">
+                                <rect key="frame" x="26" y="401" width="548" height="42"/>
+                                <string key="text">Waiting for a valid GPS signal. Please make sure the device has a clear view of the sky. This message will disappear once connection is established and speed will start showing.</string>
+                                <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -38,11 +39,17 @@
                             <constraint firstAttribute="centerX" secondItem="DVn-QY-acS" secondAttribute="centerX" id="7QM-wA-L4d"/>
                             <constraint firstAttribute="centerX" secondItem="ZuN-XB-hYw" secondAttribute="centerX" constant="-0.5" id="7db-QF-Mmv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DVn-QY-acS" secondAttribute="trailing" constant="10" id="IKb-we-Kfy"/>
-                            <constraint firstAttribute="centerY" secondItem="ZuN-XB-hYw" secondAttribute="centerY" constant="-120" id="Jh9-in-TnN"/>
+                            <constraint firstAttribute="centerY" secondItem="ZuN-XB-hYw" secondAttribute="centerY" constant="-121.5" id="Jh9-in-TnN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZuN-XB-hYw" secondAttribute="trailing" constant="10" id="NQh-dO-clw"/>
+                            <constraint firstItem="ZuN-XB-hYw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="OUS-cJ-2Cr"/>
                             <constraint firstItem="DVn-QY-acS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="mP2-j5-pKj"/>
                             <constraint firstAttribute="centerY" secondItem="DVn-QY-acS" secondAttribute="centerY" id="wHZ-r0-ZyI"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="speed" destination="DVn-QY-acS" id="1jE-iA-37H"/>
+                        <outlet property="unit" destination="ZuN-XB-hYw" id="H8C-dI-qUu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
