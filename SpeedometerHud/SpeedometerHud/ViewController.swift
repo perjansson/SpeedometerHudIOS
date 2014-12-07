@@ -7,19 +7,23 @@
 //
 
 import UIKit
+import CoreLocation
 import QuartzCore
 import Darwin
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var speed: UILabel!
     @IBOutlet weak var unit: UILabel!
     
+    var locationManager : CLLocationManager!
+    
+    let π = M_PI
+    
     var hasReceivedSpeed : Bool!
     var isMirrored : Bool!
     var isMph : Bool!
-    
-    let π = M_PI
+    var lastSpeed : Double!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +31,8 @@ class ViewController: UIViewController {
         hasReceivedSpeed = false
         isMirrored = false
         isMph = true
+        
+        self.initLocationManager()
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: "swipeUpOrDown")
         swipeUp.numberOfTouchesRequired = 1
@@ -51,6 +57,61 @@ class ViewController: UIViewController {
             self.isMph = false
             })
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func initLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = kCLDistanceFilterNone;
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
+        var locationArray = locations as NSArray
+        var location = locationArray.lastObject as? CLLocation
+        var locationSpeed = location?.speed
+        if (locationSpeed < 112) { // Sometimes an incorrect high speed is received
+            if (locationSpeed < 0) {
+                locationSpeed = 0;
+            } else {
+                hasReceivedSpeed = true;
+            }
+            
+            if locationSpeed > 0 || self.hasReceivedSpeed! {
+                var newSpeed : Speed = Speed(speedInMps: locationSpeed!);
+                if self.isMph! {
+                    updateSpeed(newSpeed.speedInMph())
+                } else {
+                    updateSpeed(newSpeed.speedInKmh())
+                }
+            }
+        }
+    }
+    
+    func updateSpeed(speed: NSString) {
+        if speedIsValid(speed.doubleValue) {
+            self.speed.text = speed
+            if self.isMph! {
+                unit.text = "mph";
+            } else {
+                unit.text = "kmh";
+            }
+        }
+    }
+    
+    func speedIsValid(newSpeed : Double?) -> Bool {
+        if (newSpeed != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
+            lastSpeed = newSpeed;
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        locationManager.stopUpdatingLocation()
     }
     
     func swipeUpOrDown() {

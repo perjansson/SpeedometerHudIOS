@@ -14,6 +14,7 @@
 		2EA87D401A34D0DC0000E46A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EA87D3E1A34D0DC0000E46A /* LaunchScreen.xib */; };
 		2EA87D4C1A34D0DC0000E46A /* SpeedometerHudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA87D4B1A34D0DC0000E46A /* SpeedometerHudTests.swift */; };
 		2EA87D561A34EF5F0000E46A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA87D551A34EF5F0000E46A /* QuartzCore.framework */; };
+		2EA87D581A34FA9C0000E46A /* Speed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA87D571A34FA9C0000E46A /* Speed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		2EA87D4A1A34D0DC0000E46A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EA87D4B1A34D0DC0000E46A /* SpeedometerHudTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedometerHudTests.swift; sourceTree = "<group>"; };
 		2EA87D551A34EF5F0000E46A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2EA87D571A34FA9C0000E46A /* Speed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				2EA87D351A34D0DC0000E46A /* AppDelegate.swift */,
 				2EA87D371A34D0DC0000E46A /* ViewController.swift */,
+				2EA87D571A34FA9C0000E46A /* Speed.swift */,
 				2EA87D391A34D0DC0000E46A /* Main.storyboard */,
 				2EA87D3C1A34D0DC0000E46A /* Images.xcassets */,
 				2EA87D3E1A34D0DC0000E46A /* LaunchScreen.xib */,
@@ -217,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA87D581A34FA9C0000E46A /* Speed.swift in Sources */,
 				2EA87D381A34D0DC0000E46A /* ViewController.swift in Sources */,
 				2EA87D361A34D0DC0000E46A /* AppDelegate.swift in Sources */,
 			);
