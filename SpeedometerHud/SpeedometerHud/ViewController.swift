@@ -109,7 +109,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if self.isMph! {
                 unit.text = "mph";
             } else {
-                unit.text = "kmh";
+                unit.text = "km/h";
             }
         }
     }
