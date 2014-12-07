@@ -19,6 +19,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager : CLLocationManager!
     
     let π = M_PI
+    var colors : [UIColor] = [UIColor.greenColor(), UIColor.yellowColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.orangeColor()]
+    var colorIndex : Int = 0
     
     var hasReceivedSpeed : Bool!
     var isMirrored : Bool!
@@ -31,6 +33,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         hasReceivedSpeed = false
         isMirrored = false
         isMph = true
+        updateTextColorForIndex(0)
         
         self.initLocationManager()
         
@@ -43,6 +46,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         swipeDown.numberOfTouchesRequired = 1
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
         view.addGestureRecognizer(swipeDown)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "swipeLeft")
+        swipeLeft.numberOfTouchesRequired = 1
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: "swipeRight")
+        swipeRight.numberOfTouchesRequired = 1
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        view.addGestureRecognizer(swipeRight)
         
         UIApplication.sharedApplication().idleTimerDisabled = true
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
@@ -134,7 +147,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         UIView.beginAnimations(nil, context: nil)
         self.view.layer.transform = CATransform3DMakeRotation(CGFloat(π), 0.0, 0.0, 0.0)
         UIView.commitAnimations()
-        
+    }
+    
+    func swipeLeft() {
+        updateTextColorForIndex(colorIndex + 1)
+    }
+    
+    func swipeRight() {
+        updateTextColorForIndex(colorIndex - 1)
+    }
+
+    
+    func updateTextColorForIndex(var colorIndex : Int) {
+        if colorIndex < 0 {
+            colorIndex = self.colors.count - 1
+        } else if colorIndex >= self.colors.count {
+            colorIndex = 0
+        }
+        self.colorIndex = colorIndex
+        speed.textColor = self.colors[colorIndex]
+        unit.textColor = self.colors[colorIndex]
     }
 
     override func didReceiveMemoryWarning() {
