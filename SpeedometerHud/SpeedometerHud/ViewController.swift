@@ -84,23 +84,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
         var locationArray = locations as NSArray
         var location = locationArray.lastObject as? CLLocation
-        var locationSpeed = location?.speed
-        if (locationSpeed < 112) { // Sometimes an incorrect high speed is received
-            if (locationSpeed < 0) {
-                locationSpeed = 0;
-            } else {
-                hasReceivedSpeed = true;
-            }
-            
-            if locationSpeed > 0 || self.hasReceivedSpeed! {
-                var newSpeed : Speed = Speed(speedInMps: locationSpeed!);
-                if self.isMph! {
-                    updateSpeed(newSpeed.speedInMph())
+        
+        if location?.speed != nil {
+            var locationSpeed = location?.speed
+            if (locationSpeed < 112) { // Sometimes an incorrect high speed is received
+                if (locationSpeed <= 0) {
+                    locationSpeed = 0;
                 } else {
-                    updateSpeed(newSpeed.speedInKmh())
+                    hasReceivedSpeed = true;
+                }
+                
+                if locationSpeed? > 0 || self.hasReceivedSpeed! {
+                    var newSpeed : Speed = Speed(speedInMps: locationSpeed!);
+                    if self.isMph! {
+                        updateSpeed(newSpeed.speedInMph())
+                    } else {
+                        updateSpeed(newSpeed.speedInKmh())
+                    }
                 }
             }
         }
+        
     }
     
     func updateSpeed(speed: NSString) {
@@ -115,7 +119,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func speedIsValid(newSpeed : Double?) -> Bool {
-        if (newSpeed != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
+        if (newSpeed? != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
             lastSpeed = newSpeed;
             return true
         } else {

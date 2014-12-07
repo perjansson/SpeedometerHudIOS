@@ -422,6 +422,7 @@
 				2EA87D511A34D0DC0000E46A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2EA87D521A34D0DC0000E46A /* Build configuration list for PBXNativeTarget "SpeedometerHudTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +431,7 @@
 				2EA87D541A34D0DC0000E46A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
