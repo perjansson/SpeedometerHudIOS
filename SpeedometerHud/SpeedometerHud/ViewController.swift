@@ -87,6 +87,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         if location?.speed != nil {
             var locationSpeed = location?.speed
+            var locationCourse = location?.course
             if (locationSpeed < 112) { // Sometimes an incorrect high speed is received
                 if (locationSpeed <= 0) {
                     locationSpeed = 0;
@@ -95,25 +96,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 }
                 
                 if locationSpeed? > 0 || self.hasReceivedSpeed! {
-                    var newSpeed : Speed = Speed(speedInMps: locationSpeed!);
-                    if self.isMph! {
-                        updateSpeed(newSpeed.speedInMph())
+                    var newSpeed : Speed
+                    if locationCourse != nil {
+                        newSpeed = Speed(speedInMps: locationSpeed!, course: locationCourse!);
                     } else {
-                        updateSpeed(newSpeed.speedInKmh())
+                        newSpeed = Speed(speedInMps: locationSpeed!);
                     }
+                    updateSpeed(newSpeed)
                 }
             }
         }
         
     }
     
-    func updateSpeed(speed: NSString) {
-        if speedIsValid(speed.doubleValue) {
-            self.speed.text = speed
+    func updateSpeed(speed: Speed) {
+        if speedIsValid(speed.speedInMps) {
             if self.isMph! {
+                self.speed.text = speed.speedInMph()
                 unit.text = "mph";
             } else {
+                self.speed.text = speed.speedInKmh()
                 unit.text = "km/h";
+            }
+            
+            if speed.hasCourse() {
+                unit.text = unit.text! + " and going \(speed.cardinalDirection())"
             }
         }
     }
