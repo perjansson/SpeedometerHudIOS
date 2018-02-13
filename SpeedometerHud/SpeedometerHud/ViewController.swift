@@ -81,13 +81,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
-        var locationArray = locations as NSArray
-        var location = locationArray.lastObject as? CLLocation
+    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        let locationArray = locations as NSArray
+        let location = locationArray.lastObject as? CLLocation
         
         if location?.speed != nil {
             var locationSpeed = location?.speed
-            var locationCourse = location?.course
+            let locationCourse = location?.course
             if (locationSpeed < 112) { // Sometimes an incorrect high speed is received
                 if (locationSpeed <= 0) {
                     locationSpeed = 0;
@@ -95,7 +95,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     hasReceivedSpeed = true;
                 }
                 
-                if locationSpeed? > 0 || self.hasReceivedSpeed! {
+                if locationSpeed > 0 || self.hasReceivedSpeed! {
                     var newSpeed : Speed
                     if locationCourse != nil {
                         newSpeed = Speed(speedInMps: locationSpeed!, course: locationCourse!);
@@ -126,7 +126,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func speedIsValid(newSpeed : Double?) -> Bool {
-        if (newSpeed? != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
+        if (newSpeed != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
             lastSpeed = newSpeed;
             return true
         } else {
@@ -134,7 +134,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         locationManager.stopUpdatingLocation()
     }
     
