@@ -11,7 +11,7 @@ import Foundation
 class Speed {
     
     var speedInMps : Double!
-    var course : Double?
+    var course : Double!
     
     init(speedInMps : Double) {
         self.speedInMps = speedInMps

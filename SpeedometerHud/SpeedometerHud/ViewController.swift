@@ -18,8 +18,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager : CLLocationManager!
     
-    let π = M_PI
-    var colors : [UIColor] = [UIColor.greenColor(), UIColor.yellowColor(), UIColor.redColor(), UIColor.blueColor(), UIColor.orangeColor()]
+    let π = Double.pi
+    var colors : [UIColor] = [UIColor.green, UIColor.yellow, UIColor.red, UIColor.blue, UIColor.orange]
     var colorIndex : Int = 0
     
     var hasReceivedSpeed : Bool!
@@ -33,43 +33,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         hasReceivedSpeed = false
         isMirrored = false
         isMph = true
-        updateTextColorForIndex(0)
+        updateTextColorForIndex(colorIndex: 0)
         
         self.initLocationManager()
         
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: "swipeUpOrDown")
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeUpOrDown))
         swipeUp.numberOfTouchesRequired = 1
-        swipeUp.direction = UISwipeGestureRecognizerDirection.Up
+        swipeUp.direction = UISwipeGestureRecognizer.Direction.up
         view.addGestureRecognizer(swipeUp)
         
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: "swipeUpOrDown")
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeUpOrDown))
         swipeDown.numberOfTouchesRequired = 1
-        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         view.addGestureRecognizer(swipeDown)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "swipeLeft")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeLeft))
         swipeLeft.numberOfTouchesRequired = 1
-        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         view.addGestureRecognizer(swipeLeft)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: "swipeRight")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.swipeRight))
         swipeRight.numberOfTouchesRequired = 1
-        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         view.addGestureRecognizer(swipeRight)
         
-        UIApplication.sharedApplication().idleTimerDisabled = true
-        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.Fade)
+        UIApplication.shared.isIdleTimerDisabled = true
+        UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.fade)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        let alertController = UIAlertController(title: "Mph or km/h?", message: "Select how speed should be shown.", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "mph", style: .Default) { action in
+    override func viewDidAppear(_ animated: Bool) {
+        let alertController = UIAlertController(title: "Mph or km/h?", message: "Select how speed should be shown.", preferredStyle: UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "mph", style: .default) { action in
             self.isMph = true
             })
-        alertController.addAction(UIAlertAction(title: "kmh", style: .Default) { action in
+        alertController.addAction(UIAlertAction(title: "kmh", style: .default) { action in
             self.isMph = false
             })
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func initLocationManager() {
@@ -81,13 +81,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    func locationManager(manager:CLLocationManager, didUpdateLocations locations:[AnyObject]) {
-        var locationArray = locations as NSArray
-        var location = locationArray.lastObject as? CLLocation
+    func locationManager(_ manager:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        let locationArray = locations as NSArray
+        let location = locationArray.lastObject as? CLLocation
         
         if location?.speed != nil {
-            var locationSpeed = location?.speed
-            var locationCourse = location?.course
+            var locationSpeed = location!.speed
+            let locationCourse = location?.course
             if (locationSpeed < 112) { // Sometimes an incorrect high speed is received
                 if (locationSpeed <= 0) {
                     locationSpeed = 0;
@@ -95,14 +95,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     hasReceivedSpeed = true;
                 }
                 
-                if locationSpeed? > 0 || self.hasReceivedSpeed! {
+                if locationSpeed > 0 || self.hasReceivedSpeed! {
                     var newSpeed : Speed
                     if locationCourse != nil {
-                        newSpeed = Speed(speedInMps: locationSpeed!, course: locationCourse!);
+                        newSpeed = Speed(speedInMps: locationSpeed, course: locationCourse!);
                     } else {
-                        newSpeed = Speed(speedInMps: locationSpeed!);
+                        newSpeed = Speed(speedInMps: locationSpeed);
                     }
-                    updateSpeed(newSpeed)
+                    updateSpeed(speed: newSpeed)
                 }
             }
         }
@@ -110,7 +110,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func updateSpeed(speed: Speed) {
-        if speedIsValid(speed.speedInMps) {
+        if speedIsValid(newSpeed: speed.speedInMps) {
             if self.isMph! {
                 self.speed.text = speed.speedInMph()
                 unit.text = "mph";
@@ -126,7 +126,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func speedIsValid(newSpeed : Double?) -> Bool {
-        if (newSpeed? != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
+        if (newSpeed != 0 || lastSpeed == 0 || abs(lastSpeed - newSpeed!) < 15) {
             lastSpeed = newSpeed;
             return true
         } else {
@@ -134,11 +134,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
     }
     
-    func swipeUpOrDown() {
+    @objc func swipeUpOrDown() {
         if (isMirrored!) {
             unmirrorScreen()
         } else {
@@ -160,30 +160,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         UIView.commitAnimations()
     }
     
-    func swipeLeft() {
-        updateTextColorForIndex(colorIndex + 1)
+    @objc func swipeLeft() {
+        updateTextColorForIndex(colorIndex: colorIndex + 1)
     }
     
-    func swipeRight() {
-        updateTextColorForIndex(colorIndex - 1)
+    @objc func swipeRight() {
+        updateTextColorForIndex(colorIndex: colorIndex - 1)
     }
-
     
-    func updateTextColorForIndex(var colorIndex : Int) {
+    func updateTextColorForIndex(colorIndex : Int) {
+        var c = colorIndex
         if colorIndex < 0 {
-            colorIndex = self.colors.count - 1
+            c = self.colors.count - 1
         } else if colorIndex >= self.colors.count {
-            colorIndex = 0
+            c = 0
         }
-        self.colorIndex = colorIndex
-        speed.textColor = self.colors[colorIndex]
-        unit.textColor = self.colors[colorIndex]
+        self.colorIndex = c
+        speed.textColor = self.colors[c]
+        unit.textColor = self.colors[c]
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        UIApplication.sharedApplication().idleTimerDisabled = false
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
 }
